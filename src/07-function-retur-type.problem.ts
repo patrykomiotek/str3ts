@@ -8,6 +8,12 @@ interface User {
   posts: Array<Post>;
 }
 
+type UserOptional = Partial<User>;
+type UserRequired = Required<User>;
+type UserWithoutId = Omit<User, "id" | "posts">;
+type UserWithRole = Pick<User, "id" | "firstName">;
+type UserReadonly = Readonly<User>;
+
 interface Post {
   id: number;
   title: string;
@@ -17,9 +23,16 @@ interface Post {
  * How do we ensure that makeUser ALWAYS
  * returns a user?
  */
+// const makeUser = (): User => {
+//   return {};
+// };
 const makeUser = () => {
-  return {};
+  return {
+    id: 123,
+    firstName: "Jan",
+  };
 };
+type MyUser = ReturnType<typeof makeUser>;
 
 it("Should return a valid user", () => {
   const user = makeUser();
